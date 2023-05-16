@@ -16,4 +16,6 @@
     <string name="wrong_email_pw">E-Posta veya Şifre yanlış</string>
     <string name="name">İsim</string>
     <string name="register_unsuccess">Kayıt İşlemi Başarısız</string>
+    <string name="save_success">Kayıt işlemi başarılı</string>
+    <string name="save_unsuccess">Kaydedilemedi</string>
 </resources>
