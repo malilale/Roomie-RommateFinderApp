@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(mAuth.getCurrentUser().isEmailVerified()) {
                     sendToMain(); //Login successful
                 }else{
-                    Toast.makeText(LoginActivity.this, "Lütfen E-Postanızı Doğrulayın", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.please_confrim_email, Toast.LENGTH_SHORT).show();
                 }
             }else {
                 progressDialog.dismiss();

@@ -1,15 +1,14 @@
 package com.roomie.app;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -70,10 +69,16 @@ public class RegisterActivity extends AppCompatActivity {
         String time = et_time.getText().toString().trim();
         String password = et_password.getText().toString().trim();
 
-
-        if(!email.isEmpty() && !password.isEmpty())
+        if(name.isEmpty() || grade.isEmpty() || state.isEmpty() || distance.isEmpty() || time.isEmpty() || password.isEmpty())
+            Toast.makeText(RegisterActivity.this, R.string.fill_all_fields, Toast.LENGTH_SHORT).show();
+        else if (password.length()<6)
+            Toast.makeText(RegisterActivity.this, R.string.min_len_password, Toast.LENGTH_SHORT).show();
+        else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            et_email.setError(getString(R.string.invaild_email));
+            Toast.makeText(RegisterActivity.this, R.string.invaild_email, Toast.LENGTH_SHORT).show();
+            et_email.setFocusable(true);
+        }else
             registerUser(email,password);
-
     }
 
     private void registerUser(String email, String password) {
@@ -118,28 +123,20 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnSuccessListener(unused -> {
                     Toast.makeText(RegisterActivity.this, R.string.save_success, Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
-                    sendToMain();})
+                    finish();})
                 .addOnFailureListener(e -> {
                     Toast.makeText(RegisterActivity.this, R.string.save_unsuccess, Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();});
     }
 
-    private void sendToMain() {
-        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
 
     private void showPopupMenu(EditText et, int menu) {
         PopupMenu popupMenu = new PopupMenu(this,et );
         popupMenu.getMenuInflater().inflate(menu, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                et.setText(menuItem.getTitle().toString());
-                return true;
-            }
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            et.setText(menuItem.getTitle().toString());
+            return true;
         });
         popupMenu.show();
     }

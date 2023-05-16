@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:src="@drawable/ytu_logo"
-        android:contentDescription="YTU logo" />
+        android:contentDescription="@string/ytu_logo" />
 
     <TextView
         android:layout_width="match_parent"

@@ -18,4 +18,21 @@
     <string name="register_unsuccess">Kayıt İşlemi Başarısız</string>
     <string name="save_success">Kayıt işlemi başarılı</string>
     <string name="save_unsuccess">Kaydedilemedi</string>
+    <string name="fill_all_fields">Lütfen tüm alanları doldurun</string>
+    <string name="min_len_password">En az 6 haneli bir şifre seçiniz</string>
+    <string name="please_confrim_email">Lütfen E-Postanızı Doğrulayın</string>
+    <string name="preparatory">Hazırlık</string>
+    <string name="grade1">1. Sınıf</string>
+    <string name="grade2">2. Sınıf</string>
+    <string name="grade3">3. Sınıf</string>
+    <string name="grade4">4. Sınıf</string>
+    <string name="searching_house">Kalacak Ev Arıyor</string>
+    <string name="searching_mate">Ev Arkadaşı Arıyor</string>
+    <string name="not_searching">Aramıyor</string>
+    <string name="distance">Kampüse İstenen/Olan Ev Uzaklığı (km)</string>
+    <string name="time">Paylaşabileceğiniz Süre (Dönem)</string>
+    <string name="state">Durum</string>
+    <string name="grade">Sınıf</string>
+    <string name="department">Bölüm</string>
+    <string name="ytu_logo">YTU logo</string>
 </resources>

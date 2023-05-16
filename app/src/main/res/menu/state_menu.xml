@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/stateHome"
-        android:title="Kalacak Ev Arıyor"/>
+        android:title="@string/searching_house"/>
     <item android:id="@+id/stateMate"
-        android:title="Ev Arkadaşı Arıyor"/>
+        android:title="@string/searching_mate"/>
     <item android:id="@+id/stateNone"
-        android:title="Aramıyor"/>
+        android:title="@string/not_searching"/>
 </menu>

@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/preparatory"
-        android:title="Hazırlık"/>
+        android:title="@string/preparatory"/>
     <item android:id="@+id/grade1"
-        android:title="1. Sınıf"/>
+        android:title="@string/grade1"/>
     <item android:id="@+id/grade2"
-        android:title="2. Sınıf"/>
+        android:title="@string/grade2"/>
     <item android:id="@+id/grade3"
-        android:title="3. Sınıf"/>
+        android:title="@string/grade3"/>
     <item android:id="@+id/grade4"
-        android:title="4. Sınıf"/>
+        android:title="@string/grade4"/>
 
 </menu>
