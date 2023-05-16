@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/stateHome"
+        android:title="Kalacak Ev Arıyor"/>
+    <item android:id="@+id/stateMate"
+        android:title="Ev Arkadaşı Arıyor"/>
+    <item android:id="@+id/stateNone"
+        android:title="Aramıyor"/>
+</menu>

@@ -61,8 +61,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendToRegisterPage() {
-       // Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-       // startActivity(intent);
+        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+        startActivity(intent);
     }
 
     private void recoverPasswordDialog() {
@@ -100,7 +100,11 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
                 progressDialog.dismiss();
-                sendToMain(); //Login successful
+                if(mAuth.getCurrentUser().isEmailVerified()) {
+                    sendToMain(); //Login successful
+                }else{
+                    Toast.makeText(LoginActivity.this, "Lütfen E-Postanızı Doğrulayın", Toast.LENGTH_SHORT).show();
+                }
             }else {
                 progressDialog.dismiss();
                 Toast.makeText(LoginActivity.this, R.string.wrong_email_pw, Toast.LENGTH_SHORT).show();
