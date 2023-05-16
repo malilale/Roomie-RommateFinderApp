@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Roomie</string>
+    <string name="password">Şifre</string>
+    <string name="email">E-Posta</string>
+    <string name="register">Kayıt Ol</string>
+    <string name="login">Giriş Yap</string>
+    <string name="forgot_password">Şifremi Unuttum</string>
+    <string name="invaild_email">Geçersiz E-Posta</string>
+    <string name="register_question">Henüz bir hesabın yok mu?</string>
+    <string name="loging">Giriş Yapılıyor</string>
+    <string name="send">Gönder</string>
+    <string name="cancel">İptal</string>
+    <string name="email_sent">E-Posta Gönderildi</string>
+    <string name="email_cnt_sent">E-Posta Gönderilemedi</string>
+    <string name="wrong_email_pw">E-Posta veya Şifre yanlış</string>
 </resources>
