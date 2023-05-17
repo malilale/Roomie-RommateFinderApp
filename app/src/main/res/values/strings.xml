@@ -60,4 +60,5 @@
     <string name="km">(km)</string>
     <string name="time_edit_title">Süre:</string>
     <string name="semester">(Dönem)</string>
+    <string name="no_apps">Bu işlem için uygulama bulunamadı</string>
 </resources>
