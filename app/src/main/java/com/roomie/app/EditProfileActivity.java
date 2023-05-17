@@ -2,29 +2,88 @@ package com.roomie.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
     private String name,state,department,grade,time,distance,email,tel, imgUrl;
+    private String new_name,new_state,new_department,new_grade,new_time,new_distance,new_tel, new_imgUrl;
     private EditText et_name, et_state, et_department, et_grade, et_distance, et_time, et_tel;
     private ImageView img_profile;
     private Button btn_save;
     private Boolean isPfpChanged;
+    private ProgressDialog progressDialog;
+    private DocumentReference documentReference;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         getSupportActionBar().setTitle(R.string.edit_profile);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.saving));
+
         getExtras();
         matchComponents();
         fillComponents();
 
+        btn_save.setOnClickListener(view -> {
+            getNewdata();
+            progressDialog.show();
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            loadDatasToDb(currentUser);
+        });
+
+    }
+
+    private void loadDatasToDb(FirebaseUser currentUser) {
+        if(currentUser!=null)
+            documentReference = db.collection("Users").document(currentUser.getUid());
+
+        Map<String, String> user = new HashMap<>();
+        user.put("name", new_name);
+        user.put("department", new_department);
+        user.put("grade", new_grade);
+        user.put("state", new_state);
+        user.put("distance", new_distance);
+        user.put("time", new_time);
+        user.put("tel", new_tel);
+        user.put("imgUrl", imgUrl);
+        user.put("email", email);
+
+
+        documentReference.set(user)
+                .addOnSuccessListener(unused -> {
+                    Toast.makeText(EditProfileActivity.this, R.string.save_success, Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    finish();})
+                .addOnFailureListener(e -> {
+                    Toast.makeText(EditProfileActivity.this, R.string.save_unsuccess, Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();});
+    }
+
+    private void getNewdata() {
+        new_name = et_name.getText().toString().trim();
+        new_state = et_state.getText().toString().trim();
+        new_department = et_department.getText().toString().trim();
+        new_grade = et_grade.getText().toString().trim();
+        new_time = et_time.getText().toString().trim();
+        new_distance = et_distance.getText().toString().trim();
+        new_tel = et_tel.getText().toString().trim();
     }
 
     private void getExtras() {
