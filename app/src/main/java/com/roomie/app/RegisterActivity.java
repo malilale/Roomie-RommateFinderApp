@@ -77,6 +77,8 @@ public class RegisterActivity extends AppCompatActivity {
             et_email.setError(getString(R.string.invaild_email));
             Toast.makeText(RegisterActivity.this, R.string.invaild_email, Toast.LENGTH_SHORT).show();
             et_email.setFocusable(true);
+        }else if(!email.contains("@std.yildiz.edu.tr")){
+            Toast.makeText(RegisterActivity.this, "std.yildiz.edu.tr uzantılı mailinizi giriniz", Toast.LENGTH_SHORT).show();
         }else
             registerUser(email,password);
     }
@@ -120,13 +122,13 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("uid",currentUser.getUid());
 
         documentReference.set(user)
-                .addOnSuccessListener(unused -> {
-                    Toast.makeText(RegisterActivity.this, R.string.save_success, Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                    finish();})
-                .addOnFailureListener(e -> {
-                    Toast.makeText(RegisterActivity.this, R.string.save_unsuccess, Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();});
+            .addOnSuccessListener(unused -> {
+                Toast.makeText(RegisterActivity.this, R.string.save_success, Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                finish();})
+            .addOnFailureListener(e -> {
+                Toast.makeText(RegisterActivity.this, R.string.save_unsuccess, Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();});
     }
 
 

@@ -2,6 +2,7 @@
     <string name="app_name">Roomie</string>
     <string name="password">Şifre</string>
     <string name="email">E-Posta</string>
+    <string name="email_edu">E-Posta @std.yildiz.edu.tr</string>
     <string name="register">Kayıt Ol</string>
     <string name="login">Giriş Yap</string>
     <string name="forgot_password">Şifremi Unuttum</string>
@@ -35,4 +36,11 @@
     <string name="grade">Sınıf</string>
     <string name="department">Bölüm</string>
     <string name="ytu_logo">YTU logo</string>
+    <string name="profile">Profil</string>
+    <string name="users">Kullanıcılar</string>
+    <string name="find_on_map">Harita İle Bul</string>
+    <string name="map">Harita</string>
+    <string name="logout">Çıkış Yap</string>
+    <string name="edit_profile">Profili Düzenle</string>
+    <string name="change_password">Şifre değiştir</string>
 </resources>
