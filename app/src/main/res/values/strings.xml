@@ -43,4 +43,7 @@
     <string name="logout">Çıkış Yap</string>
     <string name="edit_profile">Profili Düzenle</string>
     <string name="change_password">Şifre değiştir</string>
+    <string name="new_password">Yeni Şifre</string>
+    <string name="Change">Değiştir</string>
+    <string name="recover_pw_success">Şifre Başarıyla Değiştirildi</string>
 </resources>
