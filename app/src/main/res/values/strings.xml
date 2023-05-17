@@ -46,4 +46,18 @@
     <string name="new_password">Yeni Şifre</string>
     <string name="Change">Değiştir</string>
     <string name="recover_pw_success">Şifre Başarıyla Değiştirildi</string>
+    <string name="add_photo">Fotoğraf Ekle</string>
+    <string name="save">Kaydet</string>
+    <string name="edu_info">Eğitim Bilgileri</string>
+    <string name="search_title">Arama Kriterleri</string>
+    <string name="distance_title">Kampüse Uzaklık:</string>
+    <string name="time_title">Paylaşabcileceği Süre:</string>
+    <string name="contact">İletişim</string>
+    <string name="tel_title">Telefon:</string>
+    <string name="email_title">E-Posta:</string>
+    <string name="tel">Telefon</string>
+    <string name="distance_edit_title">Uzaklık:</string>
+    <string name="km">(km)</string>
+    <string name="time_edit_title">Süre:</string>
+    <string name="semester">(Dönem)</string>
 </resources>

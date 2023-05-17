@@ -32,7 +32,7 @@ import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
     private TextView tv_name, tv_state, tv_department, tv_grade, tv_time, tv_distance, tv_email, tv_tel, tv_telTitle;
-    private String tel, imgUrl;
+    private String name,state,department,grade,time,distance,email,tel, imgUrl;
     private ImageView img_profile;
 
 
@@ -88,12 +88,26 @@ public class ProfileFragment extends Fragment {
                 sendToLoginPage();
                 break;
             case R.id.act_edit:
-                //sendToEditProfilePage();
+                sendToEditProfilePage();
                 break;
             case R.id.act_updatepassword:
                 updatePasswordDialog();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void sendToEditProfilePage() {
+        Intent intent = new Intent(getActivity(),EditProfileActivity.class);
+        intent.putExtra("name",name);
+        intent.putExtra("state",state);
+        intent.putExtra("department",department);
+        intent.putExtra("grade",grade);
+        intent.putExtra("time",time);
+        intent.putExtra("distance",distance);
+        intent.putExtra("email",email);
+        intent.putExtra("tel",tel);
+        intent.putExtra("imgUrl",imgUrl);
+        startActivity(intent);
     }
 
     private void sendToLoginPage() {
@@ -134,16 +148,23 @@ public class ProfileFragment extends Fragment {
 
 
     private void getData(Task<DocumentSnapshot> task) {
-        tv_name.setText(task.getResult().getString("name"));
-        tv_state.setText(task.getResult().getString("state"));
-        tv_department.setText(task.getResult().getString("department"));
-        tv_grade.setText(task.getResult().getString("grade"));
-        tv_time.setText(task.getResult().getString("time"));
-        tv_distance.setText(task.getResult().getString("distance"));
-        tv_email.setText(task.getResult().getString("email"));
-
+        name = task.getResult().getString("name");
+        state = task.getResult().getString("state");
+        department = task.getResult().getString("department");
+        grade = task.getResult().getString("grade");
+        time = task.getResult().getString("time");
+        distance = task.getResult().getString("distance");
+        email = task.getResult().getString("email");
         tel = task.getResult().getString("tel");
         imgUrl = task.getResult().getString("imgUrl");
+
+        tv_name.setText(name);
+        tv_state.setText("Durum: "+state);
+        tv_department.setText(department);
+        tv_grade.setText(grade);
+        tv_time.setText(time+" Dönem");
+        tv_distance.setText(distance+" km");
+        tv_email.setText(email);
 
         if(!imgUrl.isEmpty()){
             Picasso.get().load(imgUrl).into(img_profile);
@@ -152,7 +173,10 @@ public class ProfileFragment extends Fragment {
         if(tel.isEmpty()) {
             tv_telTitle.setVisibility(View.GONE);
             tv_tel.setVisibility(View.GONE);
-        }else
+        }else {
             tv_tel.setText(tel);
+            tv_telTitle.setVisibility(View.VISIBLE);
+            tv_tel.setVisibility(View.VISIBLE);
+        }
     }
 }

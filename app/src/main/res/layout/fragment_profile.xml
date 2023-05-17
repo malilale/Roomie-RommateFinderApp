@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_marginBottom="15dp"
-        android:text="Eğitim Bilgileri"/>
+        android:text="@string/edu_info"/>
 
 
         <TextView
@@ -70,7 +70,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_marginStart="5dp"
-            android:text="Bilisayar Mühendisliği"
             android:textSize="18sp"/>
         <TextView
             android:id="@+id/tv_grade"
@@ -78,8 +77,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textColor="@color/black"
-            android:layout_margin="5dp"
-            android:text="3. Sınıf"/>
+            android:layout_margin="5dp"/>
 
 
     <View
@@ -95,7 +93,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_marginVertical="15dp"
-        android:text="Arama Kriterleri"/>
+        android:text="@string/search_title"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -103,18 +101,17 @@
         android:orientation="horizontal"
         android:layout_margin="5dp">
         <TextView
-            android:layout_width="170dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:text="Kampüse Uzaklık:  "/>
+            android:text="@string/distance_title"/>
         <TextView
             android:id="@+id/tv_distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:paddingStart="10dp"
-            android:text="2 km"
             android:textSize="18sp"/>
     </LinearLayout>
 
@@ -124,19 +121,18 @@
         android:orientation="horizontal"
         android:layout_margin="5dp">
         <TextView
-            android:layout_width="170dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:text="Paylaşabileceği Süre:  "/>
+            android:text="@string/time_title"/>
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textColor="@color/black"
-            android:paddingStart="10dp"
-            android:text="2 dönem"/>
+            android:paddingStart="10dp"/>
     </LinearLayout>
 
 
@@ -153,7 +149,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_marginBottom="10dp"
-        android:text="İletişim"/>
+        android:text="@string/contact"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -165,13 +161,15 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:text="Telefon:  "/>
+            android:text="@string/tel_title"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/tv_tel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:visibility="gone"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -183,7 +181,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:text="E-Posta:  "/>
+            android:text="@string/email_title"/>
         <TextView
             android:id="@+id/tv_email"
             android:layout_width="wrap_content"
