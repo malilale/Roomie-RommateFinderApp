@@ -37,8 +37,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         holder.tv_name.setText(user.getName());
         holder.tv_state.setText(user.getState());
         holder.tv_department_grade.setText(user.getDepartment()+" "+user.getGrade());
-        holder.tv_time.setText(user.getTime());
-        holder.tv_distance.setText(user.getDistance());
+        holder.tv_time.setText("Süre: "+user.getTime()+" Dönem");
+        holder.tv_distance.setText("Uzaklık: "+user.getDistance()+" km");
 
         if(!user.getImgUrl().isEmpty())
             Picasso.get().load(user.getImgUrl()).into(holder.img_profile);

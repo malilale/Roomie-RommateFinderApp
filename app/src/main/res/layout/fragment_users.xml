@@ -15,29 +15,14 @@
         android:gravity="center_vertical">
         <Button
             android:id="@+id/btn_menu_filter"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/border_shape"
             android:text="@string/pick_filter"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:textColor="@color/purple_700"
             android:layout_marginHorizontal="5dp"/>
-        <EditText
-            android:id="@+id/et_filter"
-            android:layout_width="130dp"
-            android:layout_height="50dp"
-            android:layout_weight="3"
-            android:padding="8dp"
-            android:hint="______________"
-            android:paddingStart="15dp"
-            android:layout_marginHorizontal="10dp"
-            android:background="@drawable/border_shape"/>
-        <Button
-            android:id="@+id/btn_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginEnd="10dp"
-            android:text="@string/filter"/>
+
 
     </LinearLayout>
 
@@ -46,24 +31,85 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
-        <TextView
+        android:visibility="gone"
+        android:paddingHorizontal="5dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/time_title"/>
-        <TextView
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/border_shape">
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:text="Kampüse maksimum uzaklık:"/>
+            <EditText
+                android:id="@+id/et_filterdistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/km"
+                android:paddingStart="10dp"
+                android:inputType="number"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/distance_title"/>
-        <TextView
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/border_shape">
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:text="Paylaşabileceği minimum süre:"/>
+            <EditText
+                android:id="@+id/et_filtertime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/semester"
+                android:paddingStart="10dp"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/state"/>
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/border_shape">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:text="Durum: "/>
+            <EditText
+                android:id="@+id/et_filterstate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:layout_marginHorizontal="10dp"
+                android:focusable="false"
+                android:inputType="number"/>
+            <Button
+                android:id="@+id/btn_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:text="@string/filter"/>
+        </LinearLayout>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginVertical="10dp"
         android:background="@android:color/darker_gray" />
 
     <androidx.recyclerview.widget.RecyclerView

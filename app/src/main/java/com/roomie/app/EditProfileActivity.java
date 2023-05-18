@@ -21,6 +21,7 @@ import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,6 +67,11 @@ public class EditProfileActivity extends AppCompatActivity {
         matchComponents();
         fillComponents();
 
+        et_grade.setOnClickListener(view ->
+                showPopupMenu(et_grade, R.menu.grade_menu));
+        et_state.setOnClickListener(view ->
+                showPopupMenu(et_state, R.menu.state_menu));
+
         img_profile.setOnClickListener(view ->
                 showImagePickDialog());
 
@@ -76,6 +82,16 @@ public class EditProfileActivity extends AppCompatActivity {
             loadDatasToDb(currentUser);
         });
 
+    }
+
+    private void showPopupMenu(EditText et, int menu) {
+        PopupMenu popupMenu = new PopupMenu(this,et );
+        popupMenu.getMenuInflater().inflate(menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            et.setText(menuItem.getTitle().toString());
+            return true;
+        });
+        popupMenu.show();
     }
 
     private void showImagePickDialog() {

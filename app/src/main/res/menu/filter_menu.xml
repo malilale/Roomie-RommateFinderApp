@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/act_country"
+        android:title=""/>
+    <item android:id="@+id/act_city"
+        android:title=""/>
+    <item android:id="@+id/act_startyear"
+        android:title=""/>
+    <item android:id="@+id/act_endyear"
+        android:title=""/>
+</menu>

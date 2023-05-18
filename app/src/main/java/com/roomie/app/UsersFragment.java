@@ -1,15 +1,13 @@
 package com.roomie.app;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Filter;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -32,8 +31,7 @@ public class UsersFragment extends Fragment implements SelectListener{
     ArrayList<User> list;
     CollectionReference reference;
     private Button btn_menu,btn_filter;
-    private EditText et_filter;
-    private String option, filter;
+    private EditText et_distance, et_time, et_state;
     private LinearLayout layout;
 
     @Override
@@ -51,18 +49,21 @@ public class UsersFragment extends Fragment implements SelectListener{
         userAdapter = new UserAdapter(getActivity(),list,this);
         recyclerView.setAdapter(userAdapter);
 
-        et_filter = view.findViewById(R.id.et_filter);
         btn_menu = view.findViewById(R.id.btn_menu_filter);
         btn_filter = view.findViewById(R.id.btn_filter);
 
+        et_distance = view.findViewById(R.id.et_filterdistance);
+        et_time = view.findViewById(R.id.et_filtertime);
+        et_state = view.findViewById(R.id.et_filterstate);
+
         layout = view.findViewById(R.id.filter_layout);
 
-        et_filter.setText("");
-        option = "";
+
+        et_state.setOnClickListener(view1 ->
+                showPopupStateMenu());
 
         btn_menu.setOnClickListener(view1 ->
-               // showPopupMenu());
-                deneme());
+                openFilterMenu());
 
         btn_filter.setOnClickListener(view1 ->
                 setFilters());
@@ -73,47 +74,88 @@ public class UsersFragment extends Fragment implements SelectListener{
         return view;
     }
 
-    private void deneme() {
-        if(layout.getVisibility()==View.GONE)
-            layout.setVisibility(View.VISIBLE);
-        else if(layout.getVisibility()==View.VISIBLE)
-            layout.setVisibility(View.GONE);
-    }
-
     private void setFilters() {
-        filter = et_filter.getText().toString().trim();
-        if(filter.isEmpty() || option.isEmpty()){
+        String distance = et_distance.getText().toString().trim();
+        String time = et_time.getText().toString().trim();
+        String state = et_state.getText().toString().trim();
+        Boolean getTime=false;
+
+        Query filterQuery=null;
+
+        if(state.isEmpty() && distance.isEmpty() && time.isEmpty()){
             Toast.makeText(getActivity(), R.string.pickfilter, Toast.LENGTH_SHORT).show();
             return;
+        }else if(time.isEmpty() && distance.isEmpty()){
+            //only state
+            filterQuery = reference.whereEqualTo("state",state);
+        }else if(time.isEmpty() && state.isEmpty()){
+            //only distance
+            filterQuery = reference.whereLessThanOrEqualTo("distance",distance);
+        }else if(distance.isEmpty() && state.isEmpty()){
+            //only time
+            filterQuery = reference.whereGreaterThanOrEqualTo("time",time);
+        }else if(time.isEmpty()){
+            //distance and state
+            filterQuery = reference
+                    .whereEqualTo("state",state)
+                    .whereGreaterThanOrEqualTo("time",time);
+        }else if(distance.isEmpty()){
+            //time and state
+            filterQuery = reference
+                    .whereEqualTo("state",state)
+                    .whereGreaterThanOrEqualTo("time",time);
+        }else if(state.isEmpty()){
+            //distance and time
+            filterQuery = reference.whereLessThanOrEqualTo("distance",distance);
+            getTime =true;
+        }else{
+            //all
+            filterQuery = reference
+                    .whereEqualTo("state",state)
+                    .whereLessThanOrEqualTo("distance",distance);
+            getTime = true;
         }
-        list.clear();
-        Query filterQuery = reference.whereEqualTo(option,filter);
 
+        list.clear();
+        Boolean finalGetTime = getTime;
         filterQuery.get().addOnSuccessListener(queryDocumentSnapshots -> {
             for(DocumentSnapshot d : queryDocumentSnapshots.getDocuments()){
                 list.add(d.toObject(User.class));
             }
+            if(finalGetTime){
+                float t = Float.parseFloat(time);
+                for(User u:list){
+                    if(Float.parseFloat(u.getTime())<t)
+                        list.remove(u);
+                }
+            }
             userAdapter.notifyDataSetChanged();
-        }).addOnFailureListener(e -> Toast.makeText(getActivity(), "Failed: "+e.getMessage(), Toast.LENGTH_SHORT).show());
+        }).addOnFailureListener(e -> {
+            Toast.makeText(getActivity(), "Failed: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
 
     }
 
-    private void showPopupMenu() {
-        PopupMenu popupMenu = new PopupMenu(getActivity(), btn_menu);
-        popupMenu.getMenuInflater().inflate(R.menu.filter_menu, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-               // option = getOption(menuItem.getTitle().toString());
-                et_filter.setText("");
-                btn_menu.setText(menuItem.getTitle().toString());
-                return true;
-            }
+    private void showPopupStateMenu() {
+        PopupMenu popupMenu = new PopupMenu(getActivity(),et_state );
+        popupMenu.getMenuInflater().inflate(R.menu.state_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            et_state.setText(menuItem.getTitle().toString());
+            return true;
         });
         popupMenu.show();
     }
 
-
+    private void openFilterMenu() {
+        et_distance.setText("");
+        et_time.setText("");
+        et_state.setText("");
+        if(layout.getVisibility()==View.GONE) {
+            layout.setVisibility(View.VISIBLE);
+        }else if(layout.getVisibility()==View.VISIBLE) {
+            layout.setVisibility(View.GONE);
+        }
+    }
 
 
     private void getData(){
