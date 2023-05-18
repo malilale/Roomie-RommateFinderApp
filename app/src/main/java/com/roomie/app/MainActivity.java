@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private ProfileFragment profileFragment = new ProfileFragment();
+    private UsersFragment usersFragment = new UsersFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             Fragment selected=null;
             switch (item.getItemId()){
                 case R.id.users_menu:
-                    //selected = usersFragment;
+                    selected = usersFragment;
                     getSupportActionBar().setTitle(R.string.users);
                     break;
                 case R.id.map_menu:

@@ -51,7 +51,7 @@
     <string name="edu_info">Eğitim Bilgileri</string>
     <string name="search_title">Arama Kriterleri</string>
     <string name="distance_title">Kampüse Uzaklık:</string>
-    <string name="time_title">Paylaşabcileceği Süre:</string>
+    <string name="time_title">Paylaşabileceği Süre:</string>
     <string name="contact">İletişim</string>
     <string name="tel_title">Telefon:</string>
     <string name="email_title">E-Posta:</string>
@@ -61,4 +61,9 @@
     <string name="time_edit_title">Süre:</string>
     <string name="semester">(Dönem)</string>
     <string name="no_apps">Bu işlem için uygulama bulunamadı</string>
+    <string name="pick_filter">Filtre seç</string>
+    <string name="filter">Filtrele</string>
+    <string name="pickfilter">Bir filtre seçiniz</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
