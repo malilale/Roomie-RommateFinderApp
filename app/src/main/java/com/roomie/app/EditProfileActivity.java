@@ -63,6 +63,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         setCameraIntent();
         setPickFromGalleryIntent();
+
         getExtras();
         matchComponents();
         fillComponents();

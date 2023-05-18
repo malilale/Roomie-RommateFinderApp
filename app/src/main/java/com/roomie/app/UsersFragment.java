@@ -1,5 +1,6 @@
 package com.roomie.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -169,11 +170,23 @@ public class UsersFragment extends Fragment implements SelectListener{
 
     @Override
     public void onItemClicked(int position) {
-        User currentUser = list.get(position);
-        //sendToUserProfile(currentUser);
+        User selectedUser = list.get(position);
+        sendToUserProfile(selectedUser);
     }
 
-
+    private void sendToUserProfile(User user) {
+        Intent intent = new Intent(getActivity(),UserProfileActivity.class);
+        intent.putExtra("name",user.getName());
+        intent.putExtra("state",user.getState());
+        intent.putExtra("department",user.getDepartment());
+        intent.putExtra("grade",user.getGrade());
+        intent.putExtra("time",user.getTime());
+        intent.putExtra("distance",user.getDistance());
+        intent.putExtra("email",user.getEmail());
+        intent.putExtra("tel",user.getTel());
+        intent.putExtra("imgUrl",user.getImgUrl());
+        startActivity(intent);
+    }
 
 
 }
