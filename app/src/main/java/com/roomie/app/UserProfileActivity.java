@@ -2,6 +2,8 @@ package com.roomie.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +24,23 @@ public class UserProfileActivity extends AppCompatActivity {
         getExtras();
         matchComponents();
         fillComponents();
+
+        tv_tel.setOnClickListener(view1 ->{
+            String phone = tv_tel.getText().toString();
+            String message = "Merhaba,";
+            String url = "https://wa.me/" + phone + "?text=" + message;
+            Intent whatsappIntent = new Intent(Intent.ACTION_VIEW);
+            whatsappIntent.setData(Uri.parse(url));
+            startActivity(whatsappIntent);
+        });
+
+        tv_email.setOnClickListener(view1 -> {
+            String emailAddress = tv_email.getText().toString();
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto", emailAddress, null));
+            startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
+        });
 
     }
 
@@ -52,11 +71,11 @@ public class UserProfileActivity extends AppCompatActivity {
     }
     private void fillComponents() {
         tv_name.setText(name);
-        tv_state.setText(state);
+        tv_state.setText("Durum: "+state);
         tv_department.setText(department);
         tv_grade.setText(grade);
-        tv_distance.setText(distance);
-        tv_time.setText(time);
+        tv_distance.setText(distance+" km");
+        tv_time.setText(time+" Dönem");
         tv_tel.setText(tel);
         tv_email.setText(email);
 
