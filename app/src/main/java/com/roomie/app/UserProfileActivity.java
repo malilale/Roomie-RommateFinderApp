@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,13 +30,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class UserProfileActivity extends AppCompatActivity {
     private TextView tv_name, tv_state, tv_department, tv_grade, tv_time, tv_distance, tv_email, tv_tel, tv_telTitle;
     private String name,state,department,grade,time,distance,email,tel, imgUrl, userId, CURRENT_STATE, currentUserId;
     private ImageView img_profile;
     private Button btn_request;
+    User currentUser;
 
     CollectionReference collectionReference;
 
@@ -79,6 +84,7 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void setRequest() {
+
         if(CURRENT_STATE.matches("no_state")){
             sendRequest();
         }else if(CURRENT_STATE.matches("request_sent")){
@@ -88,6 +94,43 @@ public class UserProfileActivity extends AppCompatActivity {
         }else if(CURRENT_STATE.matches("accepted")){
             showRemoveConnectionDialog();
         }
+    }
+
+    private void getUserInfoBeforeSendNotification(String msg){
+        DocumentReference reference = FirebaseFirestore.getInstance().collection("Users").document(currentUserId);
+        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                currentUser = documentSnapshot.toObject(User.class);
+                sendNotification(msg,currentUser);
+            }
+        });
+    }
+
+    private void sendNotification(String msg, User user) {
+        String receiverId = userId;
+        String senderId = currentUserId;
+
+        String currentDate = new SimpleDateFormat("dd MMMM yyyy", new Locale("tr")).format(new Date());
+        String currentTime = new SimpleDateFormat("HH:mm", new Locale("tr")).format(new Date());
+
+        HashMap<String,String> not = new HashMap<>();
+        not.put("date",currentDate);
+        not.put("time",currentTime);
+        not.put("message",user.getName()+msg);
+        not.put("imgUrl",user.getImgUrl());
+        not.put("userId",senderId);
+
+        String time = Long.toString(System.currentTimeMillis());
+        DocumentReference documentReference = collectionReference.document(receiverId).collection("Notifications").document(time);
+
+        documentReference.set(not).addOnCompleteListener(task -> {
+           if(task.isSuccessful()){
+               Log.d("Notification","Notification sent");
+           }else{
+               Log.d("Notification Failed",task.getException().getMessage());
+           }
+        });
     }
 
     private void acceptRequest() {
@@ -110,6 +153,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         CURRENT_STATE = "accepted";
                         btn_request.setBackgroundColor(0xFF4CAF50);
                         btn_request.setText("Eşleştirildi");
+                        getUserInfoBeforeSendNotification(" eşleşme talebinizi kabul etti.");
                     }else{
                         Toast.makeText(this, "İşlem Başarısız!", Toast.LENGTH_SHORT).show();
                     }
@@ -119,6 +163,8 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void cancelRequest(String msg) {
         String senderId = userId;
@@ -165,6 +211,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         CURRENT_STATE = "request_sent";
                         btn_request.setBackgroundColor(Color.DKGRAY);
                         btn_request.setText("Talep Gönderildi");
+                        getUserInfoBeforeSendNotification(" size eşleşme talebi yolladı.");
                     }else{
                         Toast.makeText(this, "Talep Gönderme İşlemi Başarısız!", Toast.LENGTH_SHORT).show();
                     }
@@ -212,7 +259,6 @@ public class UserProfileActivity extends AppCompatActivity {
             dialogInterface.dismiss();
         });
         builder.setNegativeButton("İptal", (dialogInterface, i) ->{
-
             dialogInterface.dismiss();
         });
         builder.create().show();
