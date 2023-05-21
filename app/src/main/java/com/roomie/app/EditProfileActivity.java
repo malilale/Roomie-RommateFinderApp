@@ -225,6 +225,7 @@ public class EditProfileActivity extends AppCompatActivity {
         user.put("tel", new_tel);
         user.put("imgUrl", imgUrl);
         user.put("email", email);
+        user.put("userId",currentUser.getUid());
 
         if(isPfpChanged) {
             storageRef = FirebaseStorage.getInstance().getReference("Profile Images");

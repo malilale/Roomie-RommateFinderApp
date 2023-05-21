@@ -185,6 +185,7 @@ public class UsersFragment extends Fragment implements SelectListener{
         intent.putExtra("email",user.getEmail());
         intent.putExtra("tel",user.getTel());
         intent.putExtra("imgUrl",user.getImgUrl());
+        intent.putExtra("userId",user.getUserId());
         startActivity(intent);
     }
 

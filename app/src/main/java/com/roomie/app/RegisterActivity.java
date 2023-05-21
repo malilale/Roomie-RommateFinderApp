@@ -77,8 +77,8 @@ public class RegisterActivity extends AppCompatActivity {
             et_email.setError(getString(R.string.invaild_email));
             Toast.makeText(RegisterActivity.this, R.string.invaild_email, Toast.LENGTH_SHORT).show();
             et_email.setFocusable(true);
-        }else if(!email.contains("@std.yildiz.edu.tr")){
-            Toast.makeText(RegisterActivity.this, "std.yildiz.edu.tr uzantılı mailinizi giriniz", Toast.LENGTH_SHORT).show();
+        //}else if(!email.contains("@std.yildiz.edu.tr")){
+           // Toast.makeText(RegisterActivity.this, "std.yildiz.edu.tr uzantılı mailinizi giriniz", Toast.LENGTH_SHORT).show();
         }else
             registerUser(email,password);
     }
@@ -119,7 +119,8 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("distance", et_distance.getText().toString().trim());
         user.put("time", et_time.getText().toString().trim());
         user.put("tel", "");
-        user.put("uid",currentUser.getUid());
+        user.put("userId",currentUser.getUid());
+        user.put("imgUrl","");
 
         documentReference.set(user)
             .addOnSuccessListener(unused -> {

@@ -1,12 +1,12 @@
 package com.roomie.app;
 
 public class User {
-    private String name, state, department, grade, time, distance, email, tel, imgUrl;
+    private String name, state, department, grade, time, distance, email, tel, imgUrl, userId;
 
     public User() {
     }
 
-    public User(String name, String state, String department, String grade, String time, String distance, String email, String tel, String imgUrl) {
+    public User(String name, String state, String department, String grade, String time, String distance, String email, String tel, String imgUrl, String userId) {
         this.name = name;
         this.state = state;
         this.department = department;
@@ -16,6 +16,15 @@ public class User {
         this.email = email;
         this.tel = tel;
         this.imgUrl = imgUrl;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {
