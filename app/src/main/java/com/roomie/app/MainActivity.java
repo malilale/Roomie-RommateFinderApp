@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private LocationManager locationManager;
     private static final int GPS_TIME_INTERVAL = 1000 * 2 * 5; // get gps location every 1 min
     private static final int GPS_DISTANCE = 1000; // set the distance value in meter
-    private static final int HANDLER_DELAY = 1000 * 60 * 1;
+    private static final int HANDLER_DELAY = 1000 * 10 * 1;
     private static final int START_HANDLER_DELAY = 0;
 
     @Override
@@ -117,14 +118,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Double longitude = location.getLongitude();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            Toast.makeText(MainActivity.this, "Got Coordinates: " + latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
             setUserLocations(latitude, longitude,user);
         }
     }
 
     private void setUserLocations(Double latitude, Double longitude, FirebaseUser user) {
+        String uid = user.getUid();
         FirebaseFirestore db= FirebaseFirestore.getInstance();
-
+        DocumentReference documentReference = db.collection("Users").document(uid);
+        documentReference.update("latitude",latitude,"longitude",longitude).addOnCompleteListener(task -> {
+           if(task.isSuccessful()){
+               Toast.makeText(MainActivity.this, "" + latitude + ", " + longitude+" koordinatları kaydedildi", Toast.LENGTH_SHORT).show();
+           }else{
+               Toast.makeText(MainActivity.this, "Koordinatlar kaydedilemedi", Toast.LENGTH_SHORT).show();
+           }
+        });
     }
 
 

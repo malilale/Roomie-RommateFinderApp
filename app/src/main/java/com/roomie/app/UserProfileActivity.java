@@ -154,6 +154,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         btn_request.setBackgroundColor(0xFF4CAF50);
                         btn_request.setText("Eşleştirildi");
                         getUserInfoBeforeSendNotification(" eşleşme talebinizi kabul etti.");
+                        setState("Aramıyor");
                     }else{
                         Toast.makeText(this, "İşlem Başarısız!", Toast.LENGTH_SHORT).show();
                     }
@@ -164,6 +165,14 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+    private void setState(String newState) {
+        tv_state.setText(newState);
+        DocumentReference reference1 = FirebaseFirestore.getInstance().collection("Users").document(currentUserId);
+        DocumentReference reference2 = FirebaseFirestore.getInstance().collection("Users").document(userId);
+        reference1.update("state", newState).addOnSuccessListener(unused -> {
+            reference2.update("state", newState);
+        });
+    }
 
 
     private void cancelRequest(String msg) {
@@ -393,7 +402,7 @@ public class UserProfileActivity extends AppCompatActivity {
                           }else if(state.matches("accepted")){
                               CURRENT_STATE = "accepted";
                               btn_request.setBackgroundColor(0xFF4CAF50);
-                              btn_request.setText("Eşleşme");
+                              btn_request.setText("Eşleştirildi");
                           }
                       } else {
                           CURRENT_STATE = "no_state";

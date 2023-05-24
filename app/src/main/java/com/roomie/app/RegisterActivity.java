@@ -110,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(currentUser!=null)
             documentReference = db.collection("Users").document(currentUser.getUid());
 
-        Map<String, String> user = new HashMap<>();
+        Map<String, Object> user = new HashMap<>();
         user.put("name", et_name.getText().toString().trim());
         user.put("department", et_department.getText().toString().trim());
         user.put("grade", et_grade.getText().toString().trim());
@@ -119,6 +119,8 @@ public class RegisterActivity extends AppCompatActivity {
         user.put("distance", et_distance.getText().toString().trim());
         user.put("time", et_time.getText().toString().trim());
         user.put("tel", "");
+        user.put("latitude",181);
+        user.put("longitude",181);
         user.put("userId",currentUser.getUid());
         user.put("imgUrl","");
 

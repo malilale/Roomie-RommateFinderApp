@@ -212,10 +212,11 @@ public class EditProfileActivity extends AppCompatActivity {
     private void loadDatasToDb(FirebaseUser currentUser) {
         if(currentUser!=null)
             documentReference = db.collection("Users").document(currentUser.getUid());
+        Double d = 0.0;
 
         StorageReference storageRef = null;
 
-        Map<String, String> user = new HashMap<>();
+        Map<String, Object> user = new HashMap<>();
         user.put("name", new_name);
         user.put("department", new_department);
         user.put("grade", new_grade);
@@ -225,6 +226,8 @@ public class EditProfileActivity extends AppCompatActivity {
         user.put("tel", new_tel);
         user.put("imgUrl", imgUrl);
         user.put("email", email);
+        user.put("latitude",181);
+        user.put("longitude",181);
         user.put("userId",currentUser.getUid());
 
         if(isPfpChanged) {

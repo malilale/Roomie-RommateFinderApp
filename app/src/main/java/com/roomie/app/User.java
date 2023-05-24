@@ -2,11 +2,12 @@ package com.roomie.app;
 
 public class User {
     private String name, state, department, grade, time, distance, email, tel, imgUrl, userId;
+    private Double longitude, latitude;
 
     public User() {
     }
 
-    public User(String name, String state, String department, String grade, String time, String distance, String email, String tel, String imgUrl, String userId) {
+    public User(String name, String state, String department, String grade, String time, String distance, String email, String tel, String imgUrl, String userId, Double longitude, Double latitude) {
         this.name = name;
         this.state = state;
         this.department = department;
@@ -17,6 +18,24 @@ public class User {
         this.tel = tel;
         this.imgUrl = imgUrl;
         this.userId = userId;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     public String getUserId() {
