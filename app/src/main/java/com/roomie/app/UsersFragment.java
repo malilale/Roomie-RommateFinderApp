@@ -2,12 +2,6 @@ package com.roomie.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.Filter;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -31,7 +28,6 @@ public class UsersFragment extends Fragment implements SelectListener{
     UserAdapter userAdapter;
     ArrayList<User> list;
     CollectionReference reference;
-    private Button btn_menu,btn_filter;
     private EditText et_distance, et_time, et_state;
     private LinearLayout layout;
 
@@ -50,15 +46,14 @@ public class UsersFragment extends Fragment implements SelectListener{
         userAdapter = new UserAdapter(getActivity(),list,this);
         recyclerView.setAdapter(userAdapter);
 
-        btn_menu = view.findViewById(R.id.btn_menu_filter);
-        btn_filter = view.findViewById(R.id.btn_filter);
+        Button btn_menu = view.findViewById(R.id.btn_menu_filter);
+        Button btn_filter = view.findViewById(R.id.btn_filter);
 
         et_distance = view.findViewById(R.id.et_filterdistance);
         et_time = view.findViewById(R.id.et_filtertime);
         et_state = view.findViewById(R.id.et_filterstate);
 
         layout = view.findViewById(R.id.filter_layout);
-
 
         et_state.setOnClickListener(view1 ->
                 showPopupStateMenu());
@@ -79,7 +74,7 @@ public class UsersFragment extends Fragment implements SelectListener{
         String distance = et_distance.getText().toString().trim();
         String time = et_time.getText().toString().trim();
         String state = et_state.getText().toString().trim();
-        Boolean getTime=false;
+        boolean getTime=false;
 
         Query filterQuery=null;
 
@@ -118,7 +113,7 @@ public class UsersFragment extends Fragment implements SelectListener{
         }
 
         list.clear();
-        Boolean finalGetTime = getTime;
+        boolean finalGetTime = getTime;
         filterQuery.get().addOnSuccessListener(queryDocumentSnapshots -> {
             for(DocumentSnapshot d : queryDocumentSnapshots.getDocuments()){
                 list.add(d.toObject(User.class));
@@ -131,9 +126,8 @@ public class UsersFragment extends Fragment implements SelectListener{
                 }
             }
             userAdapter.notifyDataSetChanged();
-        }).addOnFailureListener(e -> {
-            Toast.makeText(getActivity(), "Failed: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-        });
+        }).addOnFailureListener(e ->
+                Toast.makeText(getActivity(), "Failed: "+e.getMessage(), Toast.LENGTH_SHORT).show());
 
     }
 
@@ -188,6 +182,4 @@ public class UsersFragment extends Fragment implements SelectListener{
         intent.putExtra("userId",user.getUserId());
         startActivity(intent);
     }
-
-
 }

@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:text="Kampüse maksimum uzaklık:"/>
+                android:text="@string/max_distance"/>
             <EditText
                 android:id="@+id/et_filterdistance"
                 android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:text="Paylaşabileceği minimum süre:"/>
+                android:text="@string/min_time"/>
             <EditText
                 android:id="@+id/et_filtertime"
                 android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:text="Durum: "/>
+                android:text="@string/state_title"/>
             <EditText
                 android:id="@+id/et_filterstate"
                 android:layout_width="wrap_content"

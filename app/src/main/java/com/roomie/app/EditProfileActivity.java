@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
     private String name,state,department,grade,time,distance,email,tel, imgUrl;
-    private String new_name,new_state,new_department,new_grade,new_time,new_distance,new_tel, new_imgUrl;
+    private String new_name,new_state,new_department,new_grade,new_time,new_distance,new_tel;
     private EditText et_name, et_state, et_department, et_grade, et_distance, et_time, et_tel;
     private ImageView img_profile;
     private Button btn_save;
@@ -78,9 +78,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
         btn_save.setOnClickListener(view -> {
             getNewdata();
-            progressDialog.show();
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            loadDatasToDb(currentUser);
+            if(name.isEmpty() || grade.isEmpty() || state.isEmpty() || distance.isEmpty() || time.isEmpty() || department.isEmpty()) {
+                Toast.makeText(EditProfileActivity.this, R.string.fill_all_fields, Toast.LENGTH_SHORT).show();
+            }else {
+                progressDialog.show();
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                loadDatasToDb(currentUser);
+            }
         });
 
     }
@@ -212,7 +216,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private void loadDatasToDb(FirebaseUser currentUser) {
         if(currentUser!=null)
             documentReference = db.collection("Users").document(currentUser.getUid());
-        Double d = 0.0;
 
         StorageReference storageRef = null;
 

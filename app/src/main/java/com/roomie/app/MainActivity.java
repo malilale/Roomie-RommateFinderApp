@@ -1,56 +1,46 @@
 package com.roomie.app;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.tasks.OnSuccessListener;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
 public class MainActivity extends AppCompatActivity implements LocationListener {
-    private ProfileFragment profileFragment = new ProfileFragment();
-    private UsersFragment usersFragment = new UsersFragment();
-    private NotificationsFragment notificationsFragment = new NotificationsFragment();
-    private MapsFragment mapsFragment = new MapsFragment();
-    FusedLocationProviderClient fusedLocationProviderClient;
-    private  final  static int REQUEST_CODE=100;
-    private Double latitude, longitude;
+    private final ProfileFragment profileFragment = new ProfileFragment();
+    private final UsersFragment usersFragment = new UsersFragment();
+    private final NotificationsFragment notificationsFragment = new NotificationsFragment();
+    private final MapsFragment mapsFragment = new MapsFragment();
     private LocationManager locationManager;
+    private  final  static int REQUEST_CODE=100;
     private static final int GPS_TIME_INTERVAL = 1000 * 2 * 5; // get gps location every 1 min
     private static final int GPS_DISTANCE = 1000; // set the distance value in meter
-    private static final int HANDLER_DELAY = 1000 * 10 * 1;
+    private static final int HANDLER_DELAY = 1000 * 1 * 60; //get lcoation in every 1 minute
     private static final int START_HANDLER_DELAY = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // start app with users fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.container, usersFragment).commit();
 
+        //get location
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -59,8 +49,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 handler.postDelayed(this, HANDLER_DELAY);
             }
         }, START_HANDLER_DELAY);
-
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         //set Fragments by bottom navigation bar
@@ -93,9 +81,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         });
     }
 
-
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -109,8 +94,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         startActivity(intent);
         finish();
     }
-
-
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
@@ -128,9 +111,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         DocumentReference documentReference = db.collection("Users").document(uid);
         documentReference.update("latitude",latitude,"longitude",longitude).addOnCompleteListener(task -> {
            if(task.isSuccessful()){
-               Toast.makeText(MainActivity.this, "" + latitude + ", " + longitude+" koordinatları kaydedildi", Toast.LENGTH_SHORT).show();
+               Log.d("coordinates", "" + latitude + ", " + longitude);
            }else{
-               Toast.makeText(MainActivity.this, "Koordinatlar kaydedilemedi", Toast.LENGTH_SHORT).show();
+               Log.d("coordinates", "failed");
            }
         });
     }
@@ -162,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (requestCode==REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 requestLocation();
-
             } else {
                 finish();
             }

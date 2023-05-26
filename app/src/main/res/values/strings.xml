@@ -69,4 +69,9 @@
     <string name="notifications">Bildirimler</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="API_KEY">AIzaSyDsXiPUfiV1ogGB7OyHk6c8VM4jKNxkaBc</string>
+    <string name="yildiz_edu_confirm">std.yildiz.edu.tr uzantılı mailinizi giriniz</string>
+    <string name="email_verification_sent">E-Posta Doğrulaması Gönderildi</string>
+    <string name="max_distance">Kampüse maksimum uzaklık:</string>
+    <string name="min_time">Paylaşabileceği minimum süre:</string>
+    <string name="state_title">Durum:</string>
 </resources>

@@ -35,13 +35,13 @@ public class ProfileFragment extends Fragment {
     private String name,state,department,grade,time,distance,email,tel, imgUrl;
     private ImageView img_profile;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         setHasOptionsMenu(true);
+
         tv_name = view.findViewById(R.id.tv_name);
         tv_state = view.findViewById(R.id.tv_state);
         tv_department = view.findViewById(R.id.tv_department);

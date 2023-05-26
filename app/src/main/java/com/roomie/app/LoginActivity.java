@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText et_email, et_password;
     private FirebaseAuth mAuth;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, R.string.wrong_email_pw, Toast.LENGTH_SHORT).show();
             }
         });
-        //Login User
     }
 
     private void sendToMain() {

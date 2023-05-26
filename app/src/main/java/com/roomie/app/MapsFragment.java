@@ -47,15 +47,7 @@ public class MapsFragment extends Fragment {
     CollectionReference reference;
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
             GoogleMap googleMap;
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
+
         @Override
         public void onMapReady(GoogleMap googleMap) {
             this.googleMap = googleMap;
@@ -77,11 +69,7 @@ public class MapsFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         BitmapDescriptor bitmapDescriptor;
-        Log.i("122222222222","eeeeeeeeeeeee");
-        Log.i("!!!!!!!!!!!2222",""+list.size());
         for(User u:list) {
-            Log.i("11111111",u.getName());
-            Log.i("11111111",""+u.getLatitude()+"  "+u.getLongitude());
             if(u.getLatitude()>180 || u.getLongitude() >180)
                 continue;
             if(uid.matches(u.getUserId()))
@@ -140,7 +128,7 @@ public class MapsFragment extends Fragment {
                }
                getUserLocations(googleMap);
            }else{
-               Log.i("!!!!!!!!!!!","cccccccccccc");
+               Log.i("User Info","Failed");
            }
         });
     }
@@ -181,9 +169,8 @@ public class MapsFragment extends Fragment {
         String distance = et_distance.getText().toString().trim();
         String time = et_time.getText().toString().trim();
         String state = et_state.getText().toString().trim();
-        Boolean getTime=false;
+        boolean getTime=false;
 
-        Log.d("OOOOOOOOOO","_______________");
         Query filterQuery=null;
 
         if(state.isEmpty() && distance.isEmpty() && time.isEmpty()){
@@ -219,10 +206,9 @@ public class MapsFragment extends Fragment {
                     .whereLessThanOrEqualTo("distance",distance);
             getTime = true;
         }
-        Log.d("111111111111","________");
 
         list.clear();
-        Boolean finalGetTime = getTime;
+        boolean finalGetTime = getTime;
         filterQuery.get().addOnSuccessListener(queryDocumentSnapshots -> {
             for(DocumentSnapshot d : queryDocumentSnapshots.getDocuments()){
                 list.add(d.toObject(User.class));
@@ -234,11 +220,11 @@ public class MapsFragment extends Fragment {
                     if(Float.parseFloat(u.getTime())<t)
                         list.remove(u);
                 }
-                Log.d("OOOOOOOOOO",""+list.size());
                 getUserLocations(googleMap);
             }
         }).addOnFailureListener(e -> {
             Toast.makeText(getActivity(), "Failed: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            getUserLocations(googleMap);
         });
 
     }
